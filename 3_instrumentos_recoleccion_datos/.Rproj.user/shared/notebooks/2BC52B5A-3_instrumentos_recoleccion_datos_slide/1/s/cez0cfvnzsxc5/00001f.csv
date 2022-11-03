@@ -1,0 +1,26 @@
+"0","#| echo: false"
+"0","variables <- data.frame("
+"0","  tipo_nat = c(rep(""Categórica"", 3), rep(""Numérica"", 2)), "
+"0","  tipo = c(""Dicotómico / binario"", ""Nominal / Politómico"", ""Ordinal"", ""Continuo"", ""Discreto o conteo""), "
+"0","  caract = c(""Dos categorías"", ""Tres o más categorías no ordenadas"", ""Tres o más categorías ordenadas con intervalosq ue no son cuantificables"", ""Número infinito de valores posibles"", ""Número finito o infinito numerabl de valores""), "
+"0","  ejemplo = c(""Estado vital (vivo o muerto)"", ""Identidad de género, tipo sanguíneo"", ""Grado de dolor, clase social"", ""Peso, nivel de hemoglobina"", ""Número de gestaciones, número de parejas sexuales posibles"")"
+"0",")"
+"0",""
+"0","variables %>%"
+"0","  gt(groupname_col = ""tipo_nat"") %>% "
+"0","  tab_header("
+"0","    title = md(""**Tipo de medición**"")"
+"0","  ) %>% "
+"0","  cols_label("
+"0","    tipo = md(""**Tipo de medición**""), "
+"0","    caract = md(""**Característica del tipo de variable**""), "
+"0","    ejemplo = md(""**Ejemplo**"")"
+"0","  ) -> table"
+"0",""
+"0","gtsave(table, ""img/table.png"")"
+"2","Registered S3 method overwritten by 'webshot2':
+  method        from   
+  print.webshot webshot
+"
+"2","file:///C:/Users/Lenovo/AppData/Local/Temp/RtmpMNX3e8/file2d643a763432.html screenshot completed
+"

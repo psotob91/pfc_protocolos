@@ -1,0 +1,315 @@
+---
+format: 
+  revealjs: 
+    # self-contained: true
+    # theme: slides.scss
+    theme: theme/slides.scss
+    css: [theme/syntax-highlight.css, theme/custom.css, theme/pacman.css]
+    footer: "Programa de Formación Científica: Redacción de Protocolos de Investigación-2022"
+    # logo: img/icon-512-insnsb.jpg
+    transition: fade
+    background-transition: fade
+    incremental: false
+    slide-number: c/t
+    height: 900
+    width: 1600
+    chalkboard: true
+    controls: true
+    # code-block-background: true
+    # code-block-border-left: "#31BAE9"
+    highlight-style: ayu-mirage
+    # multiplex: true
+    # touch: true
+    # auto-stretch: true
+    # link-external-icon: true
+    # link-external-newwindow: true
+    # self-contained-math: true
+    
+    menu: 
+      side: left
+      width: normal
+      numbers: true
+    
+    pointer:
+      pointerSize: 22
+      color: '#D9172C'
+      
+code-link: true   
+
+from: markdown+emoji
+
+execute:
+  echo: true
+  freeze: auto
+  
+filters:
+  - reveal-auto-agenda
+  - lightbox
+  - roughnotation
+  - nutshell
+  
+auto-agenda:
+  bullets: numbered
+  heading: Agenda
+  
+lightbox: 
+  match: auto
+  effect: fade
+  desc-position: bottom
+  loop: false
+  
+revealjs-plugins: 
+  - pointer
+  - attribution
+---
+
+::: {layout="[[1, 1, 1]]"}
+
+![](https://github.com/psotob91/ae-ietsi-2022/blob/main/Sesiones/Sesion-0/images/logo-ietsi.png?raw=true){.nolightbox height='80' width='350'}
+
+![](https://github.com/psotob91/ae-ietsi-2022/blob/main/Sesiones/Sesion-0/images/logo-pueblo.jpg?raw=true){.nolightbox height='80' width='350'}
+
+![](https://github.com/psotob91/ae-ietsi-2022/blob/main/Sesiones/Sesion-0/images/logo-essalud.png?raw=true){.nolightbox height='80' width='350'}
+
+:::
+
+<h1>Instrumentos de recolección de datos</h1>
+
+<h2>[Curso: Redacción de Protocolos de Investigación, 2022]{.verde-h3}</h2>
+
+<hr>
+
+<h3>[Percy Soto-Becerra, M.D., M.Sc(c)]{.negro}</h3>
+
+<h4>[**Instituto de Evaluación de Tecnologías en Salud e Investigación -- IETSI, EsSalud]{.negro}</h4>
+
+<h4>[2022-11-02]{.negro}</h4>
+
+{{< fa brands github >}}<https://github.com/psotob91>
+
+```{r}
+#| echo: false
+#| output: false
+
+# Removing all objects including loaded libraries
+rm(list = ls(all = TRUE))
+gc()
+
+# Installing and loading packages
+if (!require("pacman")) {
+  install.packages("pacman")
+}
+
+pacman::p_unload("all") # Unloading all package except base
+
+pacman::p_load(tidyverse, 
+               tibble, 
+               pander, 
+               gt, 
+               kableExtra) # Loading packages
+```
+
+## Bienvenido al curso [1]{.circle}
+
+> Ejemplo[1]{.circle}
+
+Ejemplo[1]{.circle}
+
+`Ejemplo`
+
+::: goal
+Ejemplo
+:::
+
+::: in-out
+Ejemplo
+:::
+
+[Ejemplo]{.high}
+
+```{r}
+# Casa
+data <- c(0, 1, 2)
+```
+
+::: info-box
+Ejemplo, ejemplo
+:::
+
+## Ejemplo 2 [1]{.circle}
+
+# [Historia]{.story}
+
+## casa [Historia]{.story}
+
+[Historia]{.story}
+
+::: box
+ejemplo ejemplpo
+:::
+
+::: in-out
+Ejemplo, ejemplo, ejemplo, ejemplo, ejemplo, ejemplo, ejemplo, ejemplo, etc.
+:::
+
+<font color='#191919'>color 1</font>
+<font color='#027eb6'>color 2</font>
+
+## Video {.hidden}
+
+{{< video https://youtu.be/0lpY0Kt4bn8 width="100%" height="85%" title="The Big Bang Theory - Contrafactuales" start="0" aspect-ratio="16x9" >}}
+
+## Imagen y lightbox
+
+![](https://github.com/psotob91/ae-ietsi-2022/blob/main/Sesiones/Sesion-0/images/logo-ietsi.png?raw=true){.nolightbox height='80' width='350'}
+
+![Prueba 1](https://github.com/psotob91/ae-ietsi-2022/blob/main/Sesiones/Sesion-0/images/logo-ietsi.png?raw=true){height='80' width='350' description="prueba"}
+
+![Prueba 2](https://github.com/psotob91/ae-ietsi-2022/blob/main/Sesiones/Sesion-0/images/logo-ietsi.png?raw=true){group="my-gallery" height='80' width='350' description="prueba"}
+
+![Prueba 3](https://github.com/psotob91/ae-ietsi-2022/blob/main/Sesiones/Sesion-0/images/logo-ietsi.png?raw=true){group="my-gallery" height='80' width='350' description="prueba"}
+
+## Imagen y lightbox 2
+
+```{r}
+#| echo: false
+#| fig-cap: 
+#|   - Caption for first plot
+#| lightbox: 
+#|   group: cars
+#|   description: 
+#|     - This is the decription for first graph
+knitr::include_graphics("https://github.com/psotob91/ae-ietsi-2022/blob/main/Sesiones/Sesion-0/images/logo-ietsi.png?raw=true")
+```
+
+## Gracias grios
+
+::: pac-man
+:::
+
+## Anotaciones
+
+En este slide hay que ajustar zoom a 67% para mosrtar bien
+
+Hola [hola]{.rn} y hola [hola]{.rn}
+
+Hola [hola]{.rn rn-color=orange rn-type=circle} hola [hola]{.rn rn-color=red rn-type=underline}
+
+Hola [hola]{.rn} hola [hola]{.rn rn-color=red rn-type=strike-through}
+
+Hola [hola]{.rn} hola [hola]{.rn rn-color=red rn-type=crossed-off}
+
+## Anotaciones [2]{.circle}
+
+Orden
+
+Hola [hola]{.rn} y hola [hola]{.rn rn-index=1}
+
+Hola [hola]{.rn rn-color=orange rn-type=circle} hola [hola]{.rn rn-color=red rn-type=underline rn-index=2}
+
+Hola [hola]{.rn} hola [hola]{.rn rn-color=red rn-type=strike-through rn-index=3}
+
+Hola [hola]{.rn} hola [hola]{.rn rn-color=red rn-type=crossed-off rn-index=4}
+
+::: {.rn rn-type=box rn-color=red}
+Here is some text
+
+And there is more here
+:::
+
+
+## GitHub gists
+
+Here is a gist I wrote:
+
+(Uses the shortcode: `{{< gist sellorm 20525aff669acafb975b7495b8f2066e >}}`)
+
+{{< gist sellorm 20525aff669acafb975b7495b8f2066e >}}
+
+Gists can be pretty handy.
+
+## Twitter
+
+Here is a tweet that I tweeted on Twitter:
+
+(Uses the shortcode: `{{< tweet sellorm 1555267341327503367 >}}`)
+
+{{< tweet sellorm 1555267341327503367 >}}
+
+Duke Caboom *is* pretty great!
+
+## Vimeo
+
+A video from Vimeo:
+
+(Uses the shortcode: `{{< vimeo 22439234 >}}`)
+
+{{< vimeo 22439234 >}}
+
+It's very beautiful.
+
+## Youtube
+
+This is a video I created for [rstudio::conf(2022)](https://www.rstudio.com/conference/).
+
+(Uses the shortcode: `{{< youtube zk9zHqXm6m0 >}}`)
+
+{{< youtube zk9zHqXm6m0 >}}
+
+The video is about my [R4Pi](https://r4pi.org) project.
+
+# Nutshell
+
+## [:What is Nutshell?](#what-is-nutshell)
+
+Nutshell is a tool to make "expandable explanations", like this! This lets your readers learn only the details they need, just-in-time, always-in-context.
+
+Unlike links, Nutshell lets you include only the snippet you need, not the whole page. Plus, instead of being lost in a jungle of new tabs, your reader stays on one page, keeping their flow of reading. Even if you interrupt a sentence, Nutshell recaps the sentence afterwards, so your reader never loses context.
+
+You can find more information on the nutshell [webpage](https://ncase.me/nutshell/) 
+
+## Test
+
+This is a senseless paragraph
+
+## Testing Links
+
+- [:link to senseless paragraph](#Test)  
+- [:link to wikipedia article](https://en.wikipedia.org/wiki/Nutshell)
+- [:link to invisible sections](#x-invisible)
+
+## :x invisible
+
+Use `## :x header` to include an invisible secion that can be linked to via nutshell 
+
+## Pendientes
+
+https://github.com/mcanouil/quarto-animate
+
+## 
+
+::: r-fit-text
+<center>¡Gracias!</center>
+
+<center>¿Preguntas?</center>
+:::
+
+## 
+
+\
+
+\
+
+\
+
+::: r-fit-text
+<center>
+
+{{< fa brands twitter >}} 
+
+{{< fa brands github >}} https://github.com/psotob91
+
+{{< fa inbox >}} percys1991\@gmail.com
+
+</center>
+:::

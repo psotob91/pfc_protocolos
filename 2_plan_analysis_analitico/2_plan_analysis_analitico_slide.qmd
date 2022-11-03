@@ -1,0 +1,390 @@
+---
+format: 
+  revealjs: 
+    self-contained: true
+    # theme: slides.scss
+    theme: theme/slides.scss
+    css: [theme/syntax-highlight.css, theme/custom.css, theme/pacman.css]
+    footer: "Programa de Formación Científica: Redacción de Protocolos de Investigación-2022"
+    # logo: img/icon-512-insnsb.jpg
+    transition: fade
+    background-transition: fade
+    incremental: false
+    slide-number: c/t
+    height: 900
+    width: 1600
+    # chalkboard: true
+    controls: true
+    # code-block-background: true
+    # code-block-border-left: "#31BAE9"
+    highlight-style: ayu-mirage
+    # multiplex: true
+    # touch: true
+    # auto-stretch: true
+    # link-external-icon: true
+    # link-external-newwindow: true
+    # self-contained-math: true
+    
+    menu: 
+      side: left
+      width: normal
+      numbers: true
+    
+    pointer:
+      pointerSize: 22
+      color: '#D9172C'
+      
+code-link: true   
+
+from: markdown+emoji
+
+execute:
+  echo: true
+  freeze: auto
+  
+filters:
+  - reveal-auto-agenda
+  - lightbox
+  - roughnotation
+  - nutshell
+  
+auto-agenda:
+  bullets: numbered
+  heading: Agenda
+  
+lightbox: auto
+  
+revealjs-plugins: 
+  - pointer
+  - attribution
+---
+
+::: {layout="[[1, 1, 1]]"}
+
+![](https://github.com/psotob91/ae-ietsi-2022/blob/main/Sesiones/Sesion-0/images/logo-ietsi.png?raw=true){.nolightbox height='70' width='350'}
+
+![](https://github.com/psotob91/ae-ietsi-2022/blob/main/Sesiones/Sesion-0/images/logo-pueblo.jpg?raw=true){.nolightbox height='70' width='350'}
+
+![](https://github.com/psotob91/ae-ietsi-2022/blob/main/Sesiones/Sesion-0/images/logo-essalud.png?raw=true){.nolightbox height='70' width='350'}
+
+:::
+
+<h2>Plan de análisis para estudios analíticos</h2>
+
+<h2>[Curso: Redacción de Protocolos de Investigación, 2022]{.verde-h3}</h2>
+
+<hr>
+
+<h3>[Percy Soto-Becerra, M.D., M.Sc(c)]{.negro}</h3>
+
+<h4>[Instituto de Evaluación de Tecnologías en Salud e Investigación -- IETSI, EsSalud]{.plo}</h4>
+
+<h4>[2022-11-02]{.plo}</h4>
+
+{{< fa brands github >}}<https://github.com/psotob91>
+
+```{r}
+#| echo: false
+#| output: false
+
+# Removing all objects including loaded libraries
+rm(list = ls(all = TRUE))
+gc()
+
+# Installing and loading packages
+if (!require("pacman")) {
+  install.packages("pacman")
+}
+
+pacman::p_unload("all") # Unloading all package except base
+
+pacman::p_load(tidyverse, 
+               tibble, 
+               pander, 
+               gt, 
+               kableExtra) # Loading packages
+```
+
+
+# Introducción
+
+## Investigación 'analítica' y nuevo framework de clasificación 
+
+- Algunos autores han planteado una clasifación dicotómica de los estudios:
+
+    - `Descriptivos`: Si describen.
+    - `Analíticos`: Si "analizan", es decir, estiman `medidas de asociación`.
+    
+- Este enfoque es `problemático`:
+
+    - La clasifación no es muy útil: dicotomiza el mundo.
+    - Los métodos estadísticos a usar dependen más de los `estadísticos que queremos usar` y estos de los `estimandos que deseamos obtener`.
+
+- `Guías internacionales de reporte`, así como agencias, instituciones y asociaciones internacionales dedicadas a métodos cuantitativos en salud prefieren otra clasificación, mucho más funcional.
+
+## Clasificación basada en el tipo de obejtivo de los estudios
+
+Los estudios, y sus planes de análisis, pueden ser clasificados de acuerdo a su propósito científico:
+
+:::: {.columns}
+
+::: {.column width='30%'}
+
+\
+\
+\
+\
+
+- Describir
+
+- Explicar
+
+- Predecir
+
+:::
+
+::: {.column width='70%'}
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 80%
+knitr::include_graphics("img/explain_predict.png")
+```
+
+<center><https://www.stat.berkeley.edu/~aldous/157/Papers/shmueli.pdf></center>
+
+:::
+
+::::
+
+
+## Describir versus Predecir versus Explicar
+
+::: {.panel-tabset}
+
+### Estudios descriptivos
+
+- Interés en capturar la estructura de datos (patrones) parsimoniosamente.
+
+- Análisis estadístico se centra en medidas de frecuencia o de resumen, estratificado por algunas cuantas variables de interés.
+
+- También se hace modelado estadístico: modelado descriptivo.
+
+-  El modelado descriptivo busca identificar qué factores 'afectan' al desenlace y cómo:
+
+    - Con 'afectar' no estamos hablando de causalidad (contrafactuales).
+    - Son los populares estudios de "factores asociados a..."
+
+### Estudios predictivos
+
+- Interés en predicciones precisas de observaciones en nuevos pacientes o personas.
+
+- No preocupación acerca de causalidad.
+    
+    - No tiene sentido hablar de confusión.
+    - Aunque algunos proponen 'interpretatibilidad' del modelo predictivo, el paradigma de caja negra funciona bien si el modelo predice bien.
+
+- Medicina: 
+
+    - Modelos de predicción clínica para tamizaje, diagnóstico o pronóstico. 
+    
+### Estudios explicativos
+
+- Teoría sólida es necesaria.
+
+    - Interés en coeficientes e inferencia (intervalo de confianza/credibilidad, valor p, etc.)
+
+- Prueba y compara teorías causales existentes.
+
+- En medicina a menudo no hay teoría sólida.
+
+    - Se tienen diversos modelos etiológicos.
+    - El ensayo clínico es el paradigma de evidencia robusta para estimar efectos causales.
+    - Estudios observacionales de intervención y etiologicos tratan de estimar efectos causales sin asignación aleatoria:
+        - Bajo ciertos supuestos, esta aproximación puede ser razonable.
+:::
+
+## Los diseños de estudia importan parcialmente
+
+- Aunque los diseños de estudios (p. ej., estudio transversal, caso control, cohorte, etc.) son muy útiles para poder comunicar los métodos y justificar procedimientos que haremos, su uso es limitado para el plan de análisis.
+
+    - Por ejemplo, una cohorte prospectiva puede ser usada para:
+    
+        + Estimar efectos causales (explicar)
+        + Desarrolla y validar un modelo pronóstico (predecir)
+        + Describir la historia natural de una enfermedad a lo largo del tiempo(describir)
+
+
+- Veremos unas pinceladas de en qué enfocarse para el plan de análisis según esta clasificación.
+
+## Las medidas estadística de interés importan más
+
+:::: {.columns}
+
+::: {.column width='40%'}
+- Identificar qué se desea estimar es más importante que el diseño, pero suele amarrarse (parcialmente) a este.
+
+- Por ejemplo, si interesa `prevalencia` o `razón de prevalencias` se usan métodos diferentes a pesar de que ambos provienen de un mismo `diseño transversal`. 
+
+:::
+
+::: {.column width='60%'}
+
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/metric_plan.png")
+```
+
+
+:::
+
+::::
+
+
+# Pasos para plantear plan de análisis
+
+## Paso [1]{.circle} Especifica el tipo de objetivo de estudio (enfoque general)
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/tipos_estudio_objetivo.png")
+```
+
+## Paso [2]{.circle} Especifica la medida estadística de interés de acuerdo al diseño de estudio (interpretación y valor práctico)
+
+::: {.panel-tabset}
+
+### Descriptivos
+
+- En estudios descriptivos, métricas univariadas como prevalencia, incidencia, etc. son relevantes.
+
+- También suelen interesar comparaciones acorde a estratificadores: razones de prevalencia, diferencia de medias, razones de medias (aritméticas o geométricas), etc.
+
+    - Regresiones simples pueden ser muy útiles .
+    
+    - Regresiones ajustadas cuando se desee explicar exploratoriamente las razones de heterogeneidad.
+    
+- Cuidado con hacer muchas comparaciones a ajustes innecesarios:
+
+    - Confusión no importa.
+    - Solo estratificadores relevantes.
+
+### Predictivos
+
+- Medidas de asociación suelen tener valor menor: OR, RR, etc, se suelen reportar pero debemos tener cuidado en interpretarlas:
+
+    - Paradigma de caja negra funciona bien aquí.
+
+
+- Métricas de rendimiento predictivo en nuevas muestras son muy importantes:
+
+    - Métricas de discriminación: Área bajo la curva ROC, estadístico C, etc.
+    - Métrica de clasificación: sensibilidad, especificidad, valores predictivos.
+    - Métricas de calibración: razón esperado / observado, pendiente e intercepto de calibración, gráficos de calibración.
+
+
+### Explicativos
+
+- Medidas de asociación tratan de ser estimaciones de efectos causales: OR, RR, HR, etc.
+
+- Modelos de regresión u otras técnicas de inferencia causal robusta suelen ser muy usadas en este punto.
+
+:::
+
+## Paso [3]{.circle} Especifica las hipótesis de estudio de los valores p e intervalos de confianza (interpretación y decisión)
+
+- Inferencia estadística suele acompañar a los estimados obtenidos en casi cualquier tipo de estudio.
+
+- 
+
+## Paso [4]{.circle} Ten en cuenta el mecanismo generador de datos en el análisis estadístico (exactitud)
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/dgp.png")
+```
+
+## Paso [5]{.circle} Aplica Bioestadística Basada en Evidencia (BBE) para planear el análisis y reporte estadístico
+
+
+
+## Paso [6]{.circle} Reporta los métodos de selección de variables en los análisis multivariables de acuerdo al tipo de objetivo de estudios
+
+
+
+## Paso [7]{.circle} Provee evidencia de exploración de heterogeneidad /modificación de las métricas estadísticas / efectos de interés
+
+
+
+## Paso [8]{.circle} Evalúa los supuestos, específicamente la distribución de los desenlaces, linealidad, multicolinealidad, 'sparsity', puntos influyentes y otros
+
+- Todos los métodos estadísticos tienen dos grupos de supuestos:
+
+    - Supuestos (parcialmente) verificables empíricamente
+    
+    - Supuestos no verificables
+
+- Todos los supuestos verificables deberían evaluarse usando métodos apropiados para evaluarlos.
+
+    - Se debe describir en el plan de análisis del protocolo.
+    
+    - Se deben evaluar 
+
+## Paso [9]{.circle} Reporta el análisis principal y el análisis de sensibilidad
+
+## Paso [10]{.circle} Proporciona los métodos para resumir, mostrar e interpretar datos
+
+# Algunas pautas sobre tablas 
+
+## Tablas tipo 1
+
+## Tablas tipo 2
+
+
+
+## Ejemplos de protocolos
+
+- [Protocolo 1]()
+
+- [Protocolo 2]()
+
+- [Protocolo 3]()
+
+- [Protocolo 4]()
+
+- [Protocolo 5]()
+
+- [Protocolo 6]()
+
+- [Protocolo 7](https://bmjopen.bmj.com/content/11/12/e056853)
+
+- [Protocolo 8](https://pubmed.ncbi.nlm.nih.gov/33158830/)
+
+##
+
+::: r-fit-text
+<center>¡Gracias!</center>
+
+<center>¿Preguntas?</center>
+:::
+
+## 
+
+::: r-fit-text
+<center>
+
+{{< fa brands twitter >}} @psotob91
+
+{{< fa brands github >}} https://github.com/psotob91
+
+{{< fa inbox >}} percys1991\@gmail.com
+
+</center>
+:::

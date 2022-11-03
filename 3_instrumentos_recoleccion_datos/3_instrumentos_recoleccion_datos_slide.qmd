@@ -1,0 +1,521 @@
+---
+format: 
+  revealjs: 
+    self-contained: true
+    # theme: slides.scss
+    theme: theme/slides.scss
+    css: [theme/syntax-highlight.css, theme/custom.css, theme/pacman.css]
+    footer: "Programa de Formación Científica: Redacción de Protocolos de Investigación-2022"
+    # logo: img/icon-512-insnsb.jpg
+    transition: fade
+    background-transition: fade
+    incremental: false
+    slide-number: c/t
+    height: 900
+    width: 1600
+    # chalkboard: true
+    controls: true
+    # code-block-background: true
+    # code-block-border-left: "#31BAE9"
+    highlight-style: ayu-mirage
+    # multiplex: true
+    # touch: true
+    # auto-stretch: true
+    # link-external-icon: true
+    # link-external-newwindow: true
+    # self-contained-math: true
+    
+    menu: 
+      side: left
+      width: normal
+      numbers: true
+    
+    pointer:
+      pointerSize: 22
+      color: '#D9172C'
+      
+code-link: true   
+
+from: markdown+emoji
+
+execute:
+  echo: true
+  freeze: auto
+  
+filters:
+  - reveal-auto-agenda
+  - lightbox
+  - roughnotation
+  - nutshell
+  
+auto-agenda:
+  bullets: numbered
+  heading: Agenda
+  
+lightbox: auto
+  
+revealjs-plugins: 
+  - pointer
+  - attribution
+---
+
+::: {layout="[[1, 1, 1]]"}
+
+![](https://github.com/psotob91/ae-ietsi-2022/blob/main/Sesiones/Sesion-0/images/logo-ietsi.png?raw=true){.nolightbox height='70' width='350'}
+
+![](https://github.com/psotob91/ae-ietsi-2022/blob/main/Sesiones/Sesion-0/images/logo-pueblo.jpg?raw=true){.nolightbox height='70' width='350'}
+
+![](https://github.com/psotob91/ae-ietsi-2022/blob/main/Sesiones/Sesion-0/images/logo-essalud.png?raw=true){.nolightbox height='70' width='350'}
+
+:::
+
+<h1>Instrumentos de recolección</h1>
+
+<h2>[Curso: Redacción de Protocolos de Investigación, 2022]{.verde-h3}</h2>
+
+<hr>
+
+<h3>[Percy Soto-Becerra, M.D., M.Sc(c)]{.negro}</h3>
+
+<h4>[Instituto de Evaluación de Tecnologías en Salud e Investigación -- IETSI, EsSalud]{.plo}</h4>
+
+<h4>[2022-11-02]{.plo}</h4>
+
+{{< fa brands github >}}<https://github.com/psotob91>
+
+```{r}
+#| echo: false
+#| output: false
+
+# Removing all objects including loaded libraries
+rm(list = ls(all = TRUE))
+gc()
+
+# Installing and loading packages
+if (!require("pacman")) {
+  install.packages("pacman")
+}
+
+pacman::p_unload("all") # Unloading all package except base
+
+pacman::p_load(tidyverse, 
+               tibble, 
+               pander, 
+               gt, 
+               kableExtra) # Loading packages
+```
+
+
+# Planeamiento de mediciones
+
+## Proceso de investigación
+<hr>
+
+![*Fuente: Browner WS, et al. Designing Clinical Research. Wolters Kluwer, 5th Ed.*](img/dcr_proceso_inv.png){.lightbox description="El siguiente flujograma resume el proceso de investigación. En este proceso, la medición es un aspecto crucial."}
+
+## La medición en el proceso de investigación
+<hr>
+
+![*Fuente: Browner WS, et al. Designing Clinical Research. Wolters Kluwer, 5th Ed.*](img/dcr_proceso_inv_variables.png){.lightbox description="El siguiente flujograma resume el proceso de investigación. En este proceso, la medición es un aspecto crucial."}
+
+
+## Medición
+
+<hr>
+
+::: info-box
+`Medición` significa asignar números u otros símbolos a características de objetos de acuerdo con determinadas reglas preestablecidas.
+
+:::
+- No se mide al objeto, sino alguna de sus `características`. 
+
+- El aspecto más importante es la`especificación de las reglas` para la asignación de números a determinadas características.
+
+- Proceso de asignación debe ser `isomorfo`, debe haber una correspondencia uno a uno entre los números y las características medidas.
+
+- Además, las reglas de asignación deben `estandarizarse`.
+
+##  Medición en investigación biomédica
+
+<hr>
+
+- En investigación biomédica con enfoque cuantitativo, `medir` es un aspecto crucial del proceso.
+
+- `Mediciones` describen fenómenos en términos que puedan ser analizados estadísticamente. 
+
+- La `validez` del estudio depende de cuán bien las variables diseñadas para el estudio representan el fenómeno de interés.
+
+- Elegir la `escala de medición` impacta sobre el contenido de las mediciones realizadas.
+
+
+## {auto-animate=true}
+
+::: big-text3
+¿Cuál es la meta del proceso de medición en investigación clínica?
+:::
+
+
+## {auto-animate=true}
+
+::: big-text2
+La meta es `maximizar exactitud` de las medidas mediante mediciones que sean relativamente `precisas` e `insesgadas`.
+:::
+
+
+## Lo primero es identificar variables y sus escalas
+
+<hr>
+
+```{r}
+#| echo: false
+variables <- data.frame(
+  tipo_nat = c(rep("Categórica", 3), rep("Numérica", 2)), 
+  tipo = c("Dicotómico / binario", "Nominal / Politómico", "Ordinal", "Continuo", "Discreto o conteo"), 
+  caract = c("Dos categorías", "Tres o más categorías no ordenadas", "Tres o más categorías ordenadas con intervalosq ue no son cuantificables", "Número infinito de valores posibles", "Número finito o infinito numerabl de valores"), 
+  ejemplo = c("Estado vital (vivo o muerto)", "Identidad de género, tipo sanguíneo", "Grado de dolor, clase social", "Peso, nivel de hemoglobina", "Número de gestaciones, número de parejas sexuales posibles")
+)
+
+variables %>%
+  gt(groupname_col = "tipo_nat") %>% 
+  tab_header(
+    title = md("**Tipo de medición**")
+  ) %>% 
+  cols_label(
+    tipo = md("**Tipo de medición**"), 
+    caract = md("**Característica del tipo de variable**"), 
+    ejemplo = md("**Ejemplo**")
+  ) -> table
+
+gtsave(table, "img/table.png")
+```
+
+```{r}
+#| echo: false
+#| fig-align: center
+knitr::include_graphics("img/table.png")
+```
+
+## Variables categóricas versus numéricas
+
+> **Variables categóricas:** Fenómenos que nos pueden ser cuantificados directamente pueden ser medidos a través de su clasificación en categorías.
+
+> **Variables numéricas:** Fenómenos que pueden ser cuantificados directamente expresando cuanto cantidad hay por objeto.
+
+## Algunas recomendaciones prácticas sobre variables y escalas
+<hr>
+
+[Regla general]{.story2} Prefiere variables continuas sobre discretas o categóricas siempre que sea posible elegir.
+
+- Variables 
+
+## Validez del proceso de medición
+
+<hr>
+
+::: info-box
+
+Algunos proceso de medición deben tener evidencia empírica sobre su validez:
+
+- Precisión
+
+- Exactitud
+
+:::
+
+##  Precisión
+
+
+
+## Exactitud versus precisión
+
+\
+
+![*Fuente: Browner WS, et al. Designing Clinical Research. Wolters Kluwer, 5th Ed.*](img/accuracy_precision.png)
+
+# Instrumentos de medición y técnicas de recojo de datos
+
+## Instrumento de medición
+
+- Los `instrumentos de medición` son útiles para el proceso de cojo de datos
+
+- 
+
+## 
+
+::: big-text2
+Los `instrumentos de medición` ayudan a que el proceso de medición cumpla las características idóneas descritas.
+:::
+
+## Cuestionario
+
+::: info-box
+Documento que reúne una serie en preguntas en orden lógico para recabar datos de interés de los individuos que participan en `encuestas`, `entrevistas` u `otros contextos`. 
+:::
+
+De acuerdo a forma de aplicarse, los cuestionarios pueden ser: 
+
+- Es `auto-aplicado` cuando el participante revisa las preguntas y las responde.
+
+- Es `hetero-aplicado` cuando este proceso es asistido por un `aplicador` quien recaba los datos mediante la técnica de `entevista estructurada`, también llamda `cerrada de respuesta fija`.
+
+Los cuestionarios pueden ser usados por distintas técnicas de recolección de datos.
+
+
+## Tipos de cuestionario
+
+::: {layout="[[1, 1, 1]]"}
+
+![**Abierto:** Permiten que participante responda abiertamente.](img/cuestionario_abierto.png){.nolightbox height='502' width='520'}
+
+![**Cerrado:** Dan alternativas fijas al participantes](img/cuestionario_cerrado.png){.nolightbox height='502' width='520'}
+
+![**Mixto:** Combinan ambas estrategias](img/cuestionario_mixto.png){.nolightbox height='502' width='520'}
+
+:::
+
+## Formas de aplicación de cuestionarios
+
+![*Fuente: https://www.youtube.com/watch?v=5MT1gqLR-kk*](img/cuestionario_aplicar.png)
+
+## Técnicas de recojo de datos
+
+- Encuesta
+
+- Observación
+
+- Entrevista
+
+- Grupo focal
+
+- Formularios / Fichas de recolección de datos
+
+## Encuesta
+
+::: info-box
+La `encuesta` es una `técnica` que utiliza el `interrogatorio a los participantes` para obtener los datos requeridos para el estudio.
+:::
+
+- Por lo general el interrogatorio es `estructurado`.
+
+- Se hace uso de un `cuestionario`, principalmente de `preguntas de alternativa fija` o `cerrada`.
+
+- A menudo implica el uso de `técnicas estadísticas` y diseños muestrales.
+
+## Encuesta versus cuestionario
+
+![*Fuente: https://www.youtube.com/watch?v=5MT1gqLR-kk*](img/encuesta_cuestionario.png)
+    
+## Preguntas de alternativa fija
+    
+- Los cuestionarios están compuestos principalmente de `preguntas de alternativa fija`, las cuales requieren que el encuestado elija entre un conjunto predeterminado de respuestas.
+
+- Algunos ejemplos de preguntas de alternativa fija en cuestionarios:
+
+[1]{.circle} [Ejemplo](https://dcr-5.net/smoking-questionnaire/)
+
+[2]{.circle} [Ejemplo](https://dcr-5.net/online-examples/)
+
+## Ventajas y desventajas de la encuesta
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Ventajas]{.story2}
+
+::: box
+[1]{.circle} Es fácil de aplicar.
+
+[2]{.circle} Datos obtenidos son más confiables que observación, grupo focal u otros tipos de entrevista porque las respuestas se limitan a las alternativas planteadas.
+    
+- Preguntas de alternativas fija reducen la variabilidad de los resultados que habría por las diferencias entre los encuestadores.
+
+[3]{.circle} Codificación, análisis e interpretación son relativamente sencillos.
+
+:::
+
+:::
+
+::: {.column width='50%'}
+
+[Desventajas]]{.story2}
+
+::: box
+
+[1]{.circle} Tal vez los participantes no estén dispuestos o sean incapaces de brindar la informaicón deseada.
+
+[2]{.circle} Es posible que los participantes no deseen responder si la información es delicada, personal o sujeto a deseabilidad social.
+
+[3]{.circle} Las preguntas estructuradas y alternativas de respuesta fija pueden ocasionar pérdida de validez de cierto tipos de datos, como creencias y sentimientos.
+
+[4]{.circle} No siempre es fácil redactar las preguntas de manera apropiada: diseño de cuestionarios puede ser complejo.
+
+:::
+
+:::
+
+::::
+
+## Observación
+
+::: info-box
+Es una `técnica de recojo de datos` que utiliza el registro de patrones de conducta de personas, objetos y sucesos de una forma sistemática para obtener información sobre el fenómeno de interés.
+:::
+
+- Probablemente sea el `segundo tipo` de técnica `más utilizada` después de la encuesta.
+
+- El observador `no se comunica` con las personas que observa `ni las interroga`.
+
+- Los datos se pueden registrar...
+
+    - Conforme ocurren los sucesos.
+    
+    - Registro de eventos pasados.
+
+## Observación estructurada versus no estructurada
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Estructurada]{.story2}
+
+::: box
+- Si el investigador especifica con detalle lo que se va a observar y la forma en que se registrarán las mediciones. Se hace uso de alguna `ficha de recolección de datos`.
+
+- Adecuada cuando problema está claramente definido y se especifica la información buscada.
+
+- Los detalles al fenómeno a estudiar se puedne identificar con claridad y podría ser usada para investigación concluyente.
+:::
+
+:::
+
+::: {.column width='50%'}
+
+[No estructurada]{.story2}
+
+::: box
+
+
+- Es  si el observador supervisa todos los aspectos del fenómeno que parecen ser relevantes al problema en cuestión.
+
+- Apropiada cuando aún no se ha definido el problema con precisión y se requiere flexibilidad para identificar componentes fundamentales del problema y para formular hipótesis.
+    
+- Alto riesgo de potencial sesgo del observador.
+    
+- Los hallazgos deben tratarse como hipótesis a comprobar y no como concluyentes. 
+
+:::
+
+:::
+
+::::
+
+
+## Observación encubierta y abierta
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[]{.story2}
+
+::: box
+
+:::
+
+:::
+
+::: {.column width='50%'}
+
+[]{.story2}
+
+::: box
+
+:::
+
+:::
+
+::::
+
+## Observación natural y artifical
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[]{.story2}
+
+::: box
+
+:::
+
+:::
+
+::: {.column width='50%'}
+
+[]{.story2}
+
+::: box
+
+:::
+
+:::
+
+::::
+
+## Observación personal versus mecánica
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[]{.story2}
+
+::: box
+
+:::
+
+:::
+
+::: {.column width='50%'}
+
+[]{.story2}
+
+::: box
+
+:::
+
+:::
+
+::::
+
+## Etrevista
+
+
+
+## Grupo focal
+
+
+
+##
+
+::: r-fit-text
+<center>¡Gracias!</center>
+
+<center>¿Preguntas?</center>
+:::
+
+## 
+
+::: r-fit-text
+<center>
+
+{{< fa brands twitter >}} @psotob91
+
+{{< fa brands github >}} https://github.com/psotob91
+
+{{< fa inbox >}} percys1991\@gmail.com
+
+</center>
+:::

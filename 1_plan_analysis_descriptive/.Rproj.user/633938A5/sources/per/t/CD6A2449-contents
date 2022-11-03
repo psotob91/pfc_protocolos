@@ -1,0 +1,419 @@
+---
+format: 
+  revealjs: 
+    embed-resources: true
+    # theme: slides.scss
+    theme: theme/slides.scss
+    css: [theme/syntax-highlight.css, theme/custom.css, theme/pacman.css]
+    footer: "Programa de Formación Científica: Redacción de Protocolos de Investigación-2022"
+    # logo: img/icon-512-insnsb.jpg
+    transition: fade
+    background-transition: fade
+    incremental: false
+    slide-number: c/t
+    height: 900
+    width: 1600
+    # chalkboard: true
+    controls: false
+    # code-block-background: true
+    # code-block-border-left: "#31BAE9"
+    highlight-style: ayu-mirage
+    # multiplex: true
+    # touch: true
+    # auto-stretch: true
+    # link-external-icon: true
+    link-external-newwindow: true
+    # self-contained-math: true
+    preview-links: true
+    
+    menu: 
+      side: left
+      width: normal
+      numbers: true
+    
+    pointer:
+      pointerSize: 22
+      color: '#D9172C'
+      
+code-link: true   
+
+from: markdown+emoji
+
+execute:
+  echo: true
+  freeze: auto
+  
+filters:
+  - reveal-auto-agenda
+  - lightbox
+  - roughnotation
+  - nutshell
+  
+auto-agenda:
+  bullets: numbered
+  heading: Agenda
+  
+lightbox: auto
+  
+revealjs-plugins: 
+  - pointer
+  - attribution
+---
+
+::: {layout="[[1, 1, 1]]"}
+
+![](https://github.com/psotob91/ae-ietsi-2022/blob/main/Sesiones/Sesion-0/images/logo-ietsi.png?raw=true){.nolightbox height='70' width='350'}
+
+![](https://github.com/psotob91/ae-ietsi-2022/blob/main/Sesiones/Sesion-0/images/logo-pueblo.jpg?raw=true){.nolightbox height='70' width='350'}
+
+![](https://github.com/psotob91/ae-ietsi-2022/blob/main/Sesiones/Sesion-0/images/logo-essalud.png?raw=true){.nolightbox height='70' width='350'}
+
+:::
+
+<h2>Plan de análisis para estudios descriptivos</h2>
+
+<h2>[Curso: Redacción de Protocolos de Investigación, 2022]{.verde-h3}</h2>
+
+<hr>
+
+<h3>[Percy Soto-Becerra, M.D., M.Sc(c)]{.negro}</h3>
+
+<h4>[Instituto de Evaluación de Tecnologías en Salud e Investigación -- IETSI, EsSalud]{.plo}</h4>
+
+<h4>[2022-11-02]{.plo}</h4>
+
+{{< fa brands github >}}<https://github.com/psotob91>
+
+```{r}
+#| echo: false
+#| output: false
+
+# Removing all objects including loaded libraries
+rm(list = ls(all = TRUE))
+gc()
+
+# Installing and loading packages
+if (!require("pacman")) {
+  install.packages("pacman")
+}
+
+pacman::p_unload("all") # Unloading all package except base
+
+pacman::p_load(tidyverse, 
+               tibble, 
+               pander, 
+               gt, 
+               kableExtra) # Loading packages
+```
+
+
+# Investigación descriptiva
+
+## Motivación
+
+|  ¿Quiénes están siendo infectados y muriendo por COVID-19, 
+| de acuerdo a edad, sexo, raza, y nivel socioeconómico? (**Persona**)
+
+\
+
+|                         ¿Dónde las tasas de infección están 
+|                         disminuyendo o aumentando? (**Lugar**)
+
+\
+
+| ¿Cómo están cambiando las tasas de infección y la letalidad 
+| a lo largo del tiempo? (**Tiempo**)
+
+## Introducción a estudios descriptivos 
+
+- Los estudios descriptivos tienen roles importantes en la investigación médica.
+
+- Suelen ser el primer paso cuando nos enfrentamos a nuevas enfermedades o áreas de conocimiento.
+
+- De acuerdo con la CDC, la investigación epidemiológica descriptiva 
+
+> "(...) responden las siguientes preguntas sobre la ocurrencia enfermedades, daños o peligros ambientales: ¿Qué? ¿Cuánto? ¿Cuándo? ¿Dónde? ¿Entre quiénes?".
+
+- De acuerdo con el *Dictionary of Epidemiology*: 
+
+> "Los estudios descriptivos están más preocupados por describir asociaciones que con analizar y explicar sus efectos causales". 
+
+## Estudios descriptivos
+
+- Buscan caracterizar la distribución de la salud, enfermedad y daño o exposiciones benéficas en `poblaciones bien definidas`. 
+
+- Podemos dividirlos en dos grandes grupos:
+
+    - Aquellos que lidian con `individuos`.
+    
+    - Aqueelos que lidian con `poblaciones`.
+
+## Tipos de estudios descriptivos
+
+- Estudios que involucran datos individuales:
+
+    - Reporte de caso
+    - Serie de caso
+    - Estudio transversal (o de prevalencia)
+    - Cohortes [:descriptivas](#x-cohorte)
+    - [:Vigilancia](#x-vigilancia)
+
+- Estudios que involucran datos poblacionales: 
+
+    - Estudios ecológicos
+    
+::: aside
+Grimes DA, Schultz KF. Descriptive studies: what they can and cannot do. Lancet, 2002.
+:::
+
+## Tipos de estudios descriptivos
+
+- Estudios que involucran datos individuales:
+
+    - Reporte de caso
+    - Serie de caso
+    - Estudio transversal (o de prevalencia)
+    - Cohortes [:descriptivas](#x-cohorte)
+    - [:Vigilancia](#x-vigilancia)
+
+- Estudios que involucran datos poblacionales: 
+
+    - Estudios ecológicos
+    
+::: aside
+Grimes DA, Schultz KF. Descriptive studies: what they can and cannot do. Lancet, 2002.
+:::
+
+
+## Uso de los estudios descriptivos
+
+- Se pueden usar para:
+
+    - Análisis de tendencia
+    
+    - Planeamiento
+    
+    - Pistas sobre causas (exploratorios)
+    
+        - Inferencia causal confirmatorio se puede hacer en futuros estudios.
+    
+    - Pistas sobre factores predictivos (pronósticos o diagnósticos)
+    
+        - Evaluar incorporar a modelos predictivos se puede hacer en futuros estudios.
+    
+::: aside
+Grimes DA, Schultz KF. Descriptive studies: what they can and cannot do. Lancet, 2002.
+:::   
+
+# Pautas para el plan de análisis
+
+## Pauta [1]{.circle} Plantear pregunta clara
+
+- Cantidad objetivo de interés para investigación descriptiva:
+
+::: info-box
+Alguna característica de la verdadera distribución subyacente de la enfermedad en una población objetivo bien definida.
+:::
+
+- Buenas preguntas descriptivas requieren:
+
+    - Buen fundamento teórico sobre el proceso generador de la enfermedad
+    
+    - Definir claramente a la población objetivo
+
+## Pauta [2]{.circle} Muestreo y medición apropiados son claves
+
+- A diferencia de inferencia causal, donde no es necesario muestreos representativos de poblaciones más grandes bien definidas, en estudios descriptivos sí es vital esto.
+
+- Idealmente debería alcanzarse la representatividad estadística a través de un esquema de muestreo probabilístico.
+
+- Si no es posible, debe poder justitifarse la representatividad teórica de muestreos no probabilístico.
+
+    - Esta limitación debe analizarse, reportarse y discutirse.
+
+- Lo mismo ocurre con aspectos relacionados a la medición y el error de medición.
+
+- Muchas enfermedades son evaluadas mediante el uso de pruebas (o combinación de estas) que no son estándares de referencia perfectos. 
+
+    - Ejemplos de esto son encuestas seroepidimiológicas, etc. 
+
+## Pauta [3]{.circle} Confusión y confusores no son relevantes en epidemiología descriptiva
+
+- Los estudios descriptivos son propensos a `sesgo de selección` por muestreo no representativo y `sesgo de medición` por usar instrumentos con error de medición.
+
+- Sin embargo, no son propensos a `sesgo de confusión`, dado que su objetivo no es evaluar relaciones causales.
+    
+    - No confundir que se pueda especular sobre causalidad, de manera vaga y cauta, como parte de la discusión.
+    
+- Sin embargo, una gran cantidad de estudios descriptivos citan como limitación el `sesgo de confusión`, cuando esto realmente no tiene sentido en este tipo de estudios. 
+
+## Pauta [4]{.circle} ¿Por qué estratificar?
+
+- Dado que la investigación descriptiva busca caracterizar el fenómeno de salud enfermedad, suele ser importante evaluar este fenómeno en subgrupos o estratos de interés para
+
+    - Evaluar heterogeneidad entre y dentro de grupos para documentar brechas o disparidades
+    - Identificar grupos de alto riesgo o potenciales blancos de intervención.
+
+- Uno debe pre-definir estos estratos desde el protocolo.
+
+    - Estratos que pueden ser de interés: sexo, edad, raza, nivel socioeconómico, etnicidad, clase social, ocupación, localización geográfica y tiempo.
+    
+## Pauta [5]{.circle} ¿Ajustar o no ajustar?
+
+- Aunque la confusión no importa en estudios descriptivos, sí puede ser vital realizar ajustes.
+
+    - Recordar: ¡Ajuste no es igual a control de confusión!
+    
+- Se puede ajustar por algunas variables para hipotetizar (en sentido exploratorio) sobre las razones de la variabilidad dentro y entre las poblaciones:
+
+    - Útil para identificar mejor disparidades en distribución de enfermedades que podrían estar ocultas o enmascaradas.
+
+- Se sugiere ajustar por variables que cumplen el siguiente criterio:
+
+    - Tienen efectos conocidos sobre el desenlace.
+    - Existe heterogeneidad de los grupos
+
+## Pauta [6]{.circle} Cuidado con interpretar resultados ajustdos en estudios descriptivos
+
+- Los análisis crudos (sin ajustar) son muy importantes para describir el mundo real observado o `factual`. 
+
+    - Un error frecuente es centrarse en resultados ajustados cuando el objetivo es describir.
+    - Dado que la confusión no importa, no tenemos que hacer ajustes por estos (veamos pizarra).
+
+## Pauta [6]{.circle} Cuidado con interpretar resultados ajustdos en estudios descriptivos (cont.)
+
+
+- Los resultados crudos (no ajustados) describen el mundo real, los ajustados ayudan a entender (exploratoriamente) las diferencias en el mundo real.
+
+::: {.panel-tabset}
+
+### Crudo
+
+- Si el objetivo es entender heterogeneidad (exploratoriamente):
+
+::: info-box
+- Por ejemplio, si vemos que fallecen más médicos que enfermeras, podríamos ajustar por diferencias en edad para centrarnos más en los peligros ocupacionales que en los peligros relacionados a la edad.
+:::
+
+### Ajustado
+
+- Si el objetivo es ayudar en destinar recursos, los resultados ajustados:
+
+::: info-box
+- Aunque la tasa de mortalidad entre enfermeras y médicos sea la misma luego de ajustar por edad, la mayor mortalidad cruda en enfermeras poria
+
+- Ajustar por geografía cuando se quieren identificar diferencias de mortalidad por raza y etnicidad podría oscurecer disparidades debido al racismo sistemático.
+:::
+
+:::
+
+
+## Pauta [7]{.circle} Céntrese en medidas estadísticas que permitan evaluar significancia clínica / en Salud Pública
+
+- Haga inferencias cuando pueda justificar que estas podrían ser válidas: muestreo probabilístico o muestreo no probabilístico con justificación teórica razonable.
+
+- Estime y reporte estadísticos puntuales.
+
+- Cuando se pueda y deba hacer inferencia:
+
+    - Prefiera estimación de intervalo, en vez de prueba de hipóetsis.
+    - Pruebas de hipótesis actualmente tienen un valor limitado porque solo otorgan un valor, el valor p.
+    - Intervalos de confianza o credibilidad proporcionan mejor información sobre la incertidumbre estadística.
+    
+- Indique qué métodos de estimación utilizará. 
+
+## Pauta [8]{.circle} Pautas estadísticas extras
+
+- Use métodos apropiados cuando lidie con datos correlacionados.
+
+- Indique el programa estadístico que usará.
+
+- Trate de usar métodos para reducir los riesgos asociados a sesgo de selección o error de medición:
+
+    - Métodos para corregir muestreo no representativo.
+    - Métodos para corregir error de medición de pruebas imperfectas.
+
+## {auto-animate=true}
+
+::: big-text3
+¡Y lo más improtante!
+::: 
+
+## {auto-animate=true}
+
+::: big-text3
+Consulte con una persona con nivel de entrenamiento apropiado en Bioestadística... 
+::: 
+
+## {auto-animate=true}
+
+::: big-text3
+... para la complejidad del análisis que requiera su estudio.
+::: 
+
+## {auto-animate=true}
+
+::: big-text3
+La investigación requiere un equipo de investigación con personas especializadas en aspectos diferentes.
+::: 
+
+## {auto-animate=true}
+
+::: big-text3
+Así como uno busca un neurocirujano para una cirujía cerebral...
+::: 
+
+## {auto-animate=true}
+
+::: big-text3
+...uno busca un bioestadístico para un análisis bioestadístico .
+::: 
+
+## Veamos algunos ejemplos de protocolos
+
+- [Protocolo 1](https://bmjopen.bmj.com/content/7/2/e013786)
+
+- [Protocolo 2](https://bmjopen.bmj.com/content/7/7/e015600)
+
+- [Protocolo 3](https://bmjopen.bmj.com/content/11/3/e048317)
+
+- [Protocolo 4](https://parasitesandvectors.biomedcentral.com/articles/10.1186/s13071-022-05499-x)
+
+- [Protocolo 5](https://bmjopen.bmj.com/content/12/2/e053237)
+
+- [Protocolo 6](https://bmjopen.bmj.com/content/11/1/e044101)
+
+- [Protocolo 7](https://bmjopen.bmj.com/content/11/12/e056853)
+
+- [Protocolo 8](https://pubmed.ncbi.nlm.nih.gov/33158830/)
+
+##
+
+::: r-fit-text
+<center>¡Gracias!</center>
+
+<center>¿Preguntas?</center>
+:::
+
+## 
+
+::: r-fit-text
+<center>
+
+{{< fa brands twitter >}} @psotob91
+
+{{< fa brands github >}} https://github.com/psotob91
+
+{{< fa inbox >}} percys1991\@gmail.com
+
+</center>
+:::
+
+
+## :x cohorte 
+
+Sí, no todas las cohortes buscan identificar 'factores de riesgo'. Sobre todo si el diseño muestral lo permite, algunas cohortes pueden ser buenas para describir: `cohortes poblacionales`.
+
+## :x vigilancia 
+
+En realidad no son un diseño, pero vale la pena la mención honrosa.

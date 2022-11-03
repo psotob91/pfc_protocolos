@@ -1,0 +1,32 @@
+{
+    "id": "5A921431",
+    "path": "~/Github_webs/pfc_protocolos/3_instrumentos_recoleccion_datos/template.qmd",
+    "project_path": "template.qmd",
+    "type": "quarto_markdown",
+    "hash": "1342868859",
+    "contents": "",
+    "dirty": false,
+    "created": 1667395408059.0,
+    "source_on_save": false,
+    "relative_order": 9,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "67,118",
+        "scrollLine": "0",
+        "rmdVisualMode": "false",
+        "rmdVisualWrapConfigured": "true",
+        "docOutlineVisible": "1",
+        "rmdVisualModeLocation": "2361:3165",
+        "rmdVisualCollapsedChunks": "",
+        "docOutlineSize": "138"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1667396249,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1667396249757,
+    "read_only": false,
+    "read_only_alternatives": []
+}
